@@ -2,9 +2,8 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2025-2026 東南亞入境領隊專業手冊</title>
-    <!-- 引入字體與圖示庫 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,9 +30,10 @@
             align-items: center;
             height: 100vh;
             overflow: hidden; /* 隱藏原生捲軸 */
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* 簡報容器：固定比例 16:9 */
+        /* 簡報容器 */
         #presentation-container {
             width: 100vw;
             height: 100vh;
@@ -45,7 +45,7 @@
             overflow: hidden;
         }
 
-        /* 投影片預設隱藏，帶有淡入動畫 */
+        /* 投影片基礎樣式 */
         .slide {
             position: absolute;
             top: 0;
@@ -58,6 +58,7 @@
             transform: translateX(20px);
             display: flex;
             flex-direction: column;
+            background-color: var(--bg-color);
         }
 
         /* 啟用的投影片 */
@@ -70,6 +71,7 @@
         /* --- 內部排版樣式 --- */
         .slide-header {
             padding: 40px 60px 20px;
+            flex-shrink: 0;
         }
 
         .slide-title {
@@ -165,7 +167,7 @@
             right: 60px;
             display: flex;
             gap: 15px;
-            z-index: 10;
+            z-index: 100;
         }
         .btn-nav {
             background: var(--primary);
@@ -176,14 +178,14 @@
             border-radius: 50%;
             font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             transition: all 0.2s;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .btn-nav:hover { background: var(--accent); transform: scale(1.1); }
-        .btn-nav:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+        .btn-nav:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
 
         .progress-indicator {
             position: absolute;
@@ -195,13 +197,71 @@
             z-index: 10;
         }
 
-        /* 響應式調整 (為了讓網頁或預覽視窗縮小時也能看) */
-        @media (max-width: 1024px) {
+        /* ===== 手機版優化設定 (允許上下滑動) ===== */
+        @media (max-width: 768px) {
+            body { align-items: flex-start; } /* 讓容器貼齊頂部 */
+            
+            #presentation-container {
+                height: 100dvh; /* 自動適應手機瀏覽器的真實高度 */
+                max-height: none; /* 移除最大高度限制 */
+                border-radius: 0;
+            }
+            
+            .slide {
+                display: block; 
+                overflow-y: auto; /* 開啟上下滑動功能 */
+                -webkit-overflow-scrolling: touch; /* 讓蘋果手機滑動更順暢 */
+                padding-bottom: 100px; /* 底部多留空間給按鈕，避免擋住文字 */
+            }
+            
+            .slide-header {
+                padding: 25px 20px 15px 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.6rem;
+                padding-left: 0.8rem;
+                border-left-width: 4px;
+            }
+            
+            .slide-content {
+                padding: 0 20px 20px 20px;
+                display: block; /* 移除 flex 垂直置中，改為由上往下排 */
+            }
+            
             .grid-3 { grid-template-columns: 1fr; gap: 15px; }
             .grid-2 { grid-template-columns: 1fr; gap: 20px; }
-            .slide-title { font-size: 2rem; }
+            
             .card { padding: 20px; }
-            .card p, .card li { font-size: 1rem; }
+            .card p, .card li { font-size: 1.05rem; }
+            
+            .slide-cover {
+                display: flex;
+                padding-bottom: 0;
+            }
+            .cover-title {
+                font-size: 2.2rem;
+            }
+            .cover-subtitle { font-size: 1rem; }
+            
+            /* 調整按鈕與頁碼位置，使其固定在手機螢幕下方 */
+            .controls {
+                position: fixed; 
+                right: 15px;
+                bottom: 20px;
+            }
+            .btn-nav {
+                width: 48px;
+                height: 48px;
+            }
+            .progress-indicator {
+                position: fixed; 
+                left: 20px;
+                bottom: 35px;
+                background: rgba(255,255,255,0.8); /* 加上半透明背景，避免字看不清楚 */
+                padding: 2px 8px;
+                border-radius: 4px;
+            }
         }
     </style>
 </head>
@@ -209,17 +269,15 @@
 
     <div id="presentation-container">
         
-        <!-- Slide 1: 封面 -->
         <div class="slide slide-cover active">
             <div class="slide-content">
                 <div class="cover-subtitle">Southeast Asia Guidelines</div>
                 <h1 class="cover-title">東南亞各國入境規定<br><span style="color: var(--accent);">領隊專業實務手冊</span></h1>
-                <p style="font-size: 1.5rem; color: #94a3b8; margin-bottom: 40px;">泰國 ‧ 越南 ‧ 新加坡 ‧ 馬來西亞 ‧ 菲律賓 ‧ 印尼</p>
+                <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 40px; line-height: 1.8;">泰國 ‧ 越南 ‧ 新加坡<br>馬來西亞 ‧ 菲律賓 ‧ 印尼</p>
                 <div class="cover-date">版本：2025 – 2026 專用版</div>
             </div>
         </div>
 
-        <!-- Slide 2: 通用規定 -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">⚠️ 全區域通用鐵則</h2>
@@ -242,7 +300,6 @@
             </div>
         </div>
 
-        <!-- Slide 3: 泰國 -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">泰國 🇹🇭 入境與實務</h2>
@@ -250,9 +307,9 @@
             <div class="slide-content">
                 <div class="grid-2">
                     <div class="card">
-                        <span class="badge">簽證：免簽 (TDAC) / 60天</span>
-                        <span class="badge">匯率：泰銖 1:1</span>
-                        <span class="badge">時差：慢台灣 1 小時</span>
+                        <span class="badge">免簽 (TDAC) / 60天</span>
+                        <span class="badge">匯率約 1:1</span>
+                        <span class="badge">慢台灣 1 小時</span>
                         <h3><i class="fa-solid fa-plane-arrival"></i> 通關與接機</h3>
                         <ul class="custom-list">
                             <li>走人工通道：<span class="highlight-text">十隻手指皆需按壓指紋</span>。</li>
@@ -274,15 +331,15 @@
             </div>
         </div>
 
-        <!-- Slide 4: 越南 (簽證矩陣) -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">越南 🇻🇳 各區簽證與通關實務</h2>
             </div>
             <div class="slide-content">
-                <p style="margin-bottom: 20px; font-size: 1.1rem;">越南因地區不同，簽證與通關形式差異極大，請依照目的地確認：</p>
                 <div class="grid-2">
                     <div class="card">
+                        <span class="badge">匯率約 1:0.0012</span>
+                        <span class="badge">慢台灣 1 小時</span>
                         <h3><i class="fa-solid fa-map-location-dot"></i> 北越 & 南越</h3>
                         <ul class="custom-list">
                             <li><strong>北越 (公文簽)：</strong>需備2吋照*2。<br>入境拿<span class="highlight-text">粉紅小卡</span>(務必保管)，走 VIP 快通。出境前導遊先收護照。</li>
@@ -301,7 +358,6 @@
             </div>
         </div>
 
-        <!-- Slide 5: 越南 (風俗) -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">越南 🇻🇳 風俗與生活提醒</h2>
@@ -325,17 +381,16 @@
                     <div class="card">
                         <h3><i class="fa-solid fa-cloud-sun-rain"></i> 氣候概況</h3>
                         <ul class="custom-list">
-                            <li><strong>北越：</strong>四季分明</li>
-                            <li><strong>中越：</strong>10-2月為雨季</li>
-                            <li><strong>南越：</strong>5-11月為雨季</li>
-                            <li><strong>富國島：</strong>4-11月雨季 (7-8月雨最大)</li>
+                            <li><strong>北越：</strong>四季分明。</li>
+                            <li><strong>中越：</strong>10-2月為雨季。</li>
+                            <li><strong>南越：</strong>5-11月為雨季。</li>
+                            <li><strong>富國島：</strong>4-11月雨季 (7-8月雨最大)。</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: 新加坡 & 馬來西亞 -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">星馬 🇸🇬 🇲🇾 規定對照</h2>
@@ -343,7 +398,7 @@
             <div class="slide-content">
                 <div class="grid-2">
                     <div class="card">
-                        <span class="badge">新加坡 🇸🇬 免簽 (SGAC APP)</span>
+                        <span class="badge">新加坡 🇸🇬 免簽 (SGAC)</span>
                         <h3><i class="fa-solid fa-city"></i> 新加坡實務</h3>
                         <ul class="custom-list">
                             <li>停留30天，全程自動通關。無時差。</li>
@@ -367,7 +422,6 @@
             </div>
         </div>
 
-        <!-- Slide 7: 菲律賓 & 印尼 -->
         <div class="slide">
             <div class="slide-header">
                 <h2 class="slide-title">菲律賓 🇵🇭 & 印尼 🇮🇩</h2>
@@ -378,84 +432,4 @@
                         <span class="badge">菲律賓 🇵🇭 免簽 (eTravel)</span>
                         <h3><i class="fa-solid fa-water"></i> 菲律賓實務</h3>
                         <ul class="custom-list">
-                            <li>停留 14 天。<span class="highlight-text">15歲以下需準備英文戶籍謄本正本</span>。</li>
-                            <li>打火機：入境可攜帶，<strong>出境嚴禁攜帶</strong>。</li>
-                            <li>務必請旅客保留「電子機票」備查。</li>
-                            <li>插座同台灣，不需轉接。有收奢侈稅。</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <span class="badge">印尼 🇮🇩 落地簽 (50萬盾)</span>
-                        <h3><i class="fa-solid fa-volcano"></i> 印尼實務</h3>
-                        <ul class="custom-list">
-                            <li>需72H前申請健康申明。觀光稅由導遊處理。</li>
-                            <li>時差：雅加達慢1H / 峇里島無時差。</li>
-                            <li><strong>環境：</strong>大自然亮點，蚊蟲極多；餐食重油重鹹。</li>
-                            <li><strong>出境限制：</strong><span class="highlight-text">導遊只能在管制區外，無法進入。</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 控制元件 -->
-        <div class="progress-indicator" id="page-indicator">1 / 7</div>
-        <div class="controls">
-            <button class="btn-nav" id="btn-prev" onclick="prevSlide()" aria-label="上一頁"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="btn-nav" id="btn-next" onclick="nextSlide()" aria-label="下一頁"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-
-    </div>
-
-    <!-- 簡易 JavaScript 控制簡報邏輯 -->
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        const pageIndicator = document.getElementById('page-indicator');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
-
-        function updatePresentation() {
-            // 移除所有 active class
-            slides.forEach(slide => slide.classList.remove('active'));
-            // 加入當前 active class
-            slides[currentSlide].classList.add('active');
-            
-            // 更新頁碼
-            pageIndicator.innerText = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // 更新按鈕狀態
-            btnPrev.disabled = currentSlide === 0;
-            btnNext.disabled = currentSlide === totalSlides - 1;
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updatePresentation();
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updatePresentation();
-            }
-        }
-
-        // 監聽鍵盤左右鍵
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'ArrowRight' || event.key === 'Space') {
-                nextSlide();
-            } else if (event.key === 'ArrowLeft') {
-                prevSlide();
-            }
-        });
-
-        // 初始化
-        updatePresentation();
-    </script>
-
-</body>
-</html>
+                            <li>停留 14 天。<span class="highlight-text">15歲以下需準備英文戶籍謄本正
