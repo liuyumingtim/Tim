@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YoYo 領隊話術手冊</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --navy: #1A2744;
+    --navy-light: #2A3A5C;
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --text-main: #1A1A1A;
+    --text-sub: #6B6B6B;
+    --border: #E8E0D0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.08);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.06);
+  }
+  .header-badge {
+    display: inline-block;
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+  }
+  .header-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  .gold-line {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* NAV TABS */
+  .nav {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 14px 12px;
+    border: none;
+    background: transparent;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12px;
+    color: var(--text-sub);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+  .nav-btn.active {
+    color: var(--navy);
+    border-bottom-color: var(--gold);
+    font-weight: 500;
+  }
+  .nav-btn:hover { color: var(--navy); }
+
+  /* CONTENT */
+  .content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .section-timing {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-light);
+    color: #7A5C1A;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 400;
+  }
+  .section-timing::before { content: '📍'; font-size: 11px; }
+
+  /* SCRIPT CARD */
+  .script-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .script-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .script-text {
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text-main);
+    font-weight: 400;
+  }
+  .script-text .highlight {
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .script-text .note {
+    color: var(--text-sub);
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* TIP BOX */
+  .tip-box {
+    background: #F0F4FF;
+    border: 1px solid #C8D4F0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #3A4A7A;
+    line-height: 1.8;
+  }
+  .tip-box strong { color: var(--navy); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    background: var(--navy);
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">可樂旅遊 · 國際短程線</div>
+  <h1 class="header-title"><span>YoYo</span> 領隊話術手冊</h1>
+  <p class="header-sub">劉又銘 / YoYo</p>
+  <div class="gold-line"></div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('s1', this)">第一天開車詞</button>
+  <button class="nav-btn" onclick="showSection('s2', this)">最後一天謝車詞</button>
+</nav>
+
+<div class="content">
+
+  <!-- 第一天開車詞 -->
+  <div class="section active" id="s1">
+    <div class="section-header">
+      <span class="section-num">SECTION 01</span>
+      <h2 class="section-title">第一天抵達當地｜開車詞</h2>
+      <span class="section-timing">抵達當地、第一次上巴士出發時</span>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        各位貴賓，大家早安！歡迎來到<span class="highlight">【泰國／越南／印尼峇里島／新加坡／馬來西亞】</span>！
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        感受到東南亞的熱情了嗎？如果還沒有也沒關係，我們還有五天的時間慢慢體驗。不過熱歸熱，車上冷氣大家可以依照自己的需求調整，但要注意不要直接對著頭吹，這樣容易頭痛，也要留意一下前排的貴賓喔。另外提醒，上車之後麻煩大家記得繫上安全帶，這是對自己最基本的保護，謝謝大家配合。
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        我是可樂旅遊這次行程的領隊劉又銘，大家可以親切地叫我 <span class="highlight">YoYo</span>。這五天有任何需要，隨時都可以找我。
+      </p>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+    <div class="script-card">
+      <p class="script-text">
+        先跟大家說幾個重要的事情——
+        <br><br>
+        <span class="highlight">首先是時差</span>，這裡跟台灣慢一個小時 <span class="note">（可能無時差，依實際國家調整）</span>，建議大家現在就把手機或手錶調成當地時間，這樣接下來的集合時間才不會搞混。我們是團體行動，準時對大家都是一種尊重，謝謝大家配合。
+        <br><br>
+        <span class="highlight">再來是交通</span>，這個國家的駕駛方向跟台灣不同 <span class="note">（相同則不需說明）</span>，不管是過路口還是上下車，都麻煩大家多留意一下方向，安全第一。
+        <br><br>
+        <span class="highlight">現在請大家花幾秒鐘確認一下</span>——護照、錢包、手機，都帶在身上了嗎？這五天在外，人身安全、身體健康、財務安全是最重要的三件事。有任何不舒服或任何問題，不管大小，請隨時告訴我，我會盡全力幫大家處理。
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text highlight">
+        好，接下來把時間交給我們這次最專業、最用心的當地導遊 XX，讓我們一起度過精彩充實的五天！謝謝大家！
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <strong>📝 提醒自己</strong><br>
+      時差與駕駛方向依目的地調整，出發前確認好再說。冷氣、安全帶是每次上車的固定提醒。
+    </div>
+  </div>
+
+  <!-- 謝車詞 -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">SECTION 02</span>
+      <h2 class="section-title">最後一天返程｜謝車詞</h2>
+      <span class="section-timing">最後一天前往機場的車上</span>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        各位貴賓，大家好！
+        <br><br>
+        時間過得真的很快——五天的行程，我們已經順利來到最後一個景點，機場了。
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        首先，YoYo 要先謝謝各位貴賓這五天對我的信任、支持與配合。我們一起開開心心出門，也平平安安、盡興而歸。這五天非常的好，老天爺相當眷顧我們，讓所有行程都順利完成。每一位貴賓都非常棒，來——請先給自己一個熱烈的掌聲！
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        跟大家相處的這幾天，YoYo 真的覺得非常開心，雖然每團都這樣說。但是能夠一起出門旅行，這是一種很難得的緣分。如果未來在可樂旅遊的團上還能再見到各位，我會非常高興，也歡迎大家繼續參加我們的行程！
+      </p>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+    <div class="script-card">
+      <p class="script-text">
+        接下來要特別感謝這五天全程陪伴我們的導遊 XX，以及我們的司機大哥。做這一行真的非常辛苦，常常沒辦法好好陪家人，他們的付出讓這趟旅程得以順利進行。請大家給他們最熱烈的掌聲，謝謝！
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text">
+        最後當然就是我啦——YoYo！哈哈。不過我的任務還沒完成喔，我會陪大家直到行李全部拿到、確認每個人都沒問題，才算真正下班。
+      </p>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+    <div class="script-card">
+      <p class="script-text">
+        這邊有一件事要麻煩各位貴賓幫個忙。可樂旅遊非常重視每一位貴賓的意見與需求，希望大家每一趟旅行都能滿意而歸，所以公司準備了一份「<span class="highlight">參團意見調查表</span>」。這五天如果有任何服務不周到的地方，麻煩給 YoYo 指教；如果有覺得特別棒的行程或服務，也非常歡迎寫下來，讓我們能夠持續進步、做得更好。稍後我會把表單發到我們的 LINE 群組，麻煩大家在等待登機的時間抽空填寫，表單今天晚上 12 點截止，真的非常感謝大家的幫忙！
+      </p>
+    </div>
+
+    <div class="script-card">
+      <p class="script-text highlight">
+        最後，祝大家身體健康、萬事如意，一路順風回到溫暖的家。謝謝大家，掰掰！
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <strong>📝 提醒自己</strong><br>
+      謝車詞說完後記得把意見調查表連結發到 LINE 群組，並確認每位貴賓行李都順利領取後才正式下班。
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>YoYo 領隊話術手冊</span><br>
+  劉又銘 · 可樂旅遊 國際短程線
+</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
