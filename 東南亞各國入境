@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025-2026 東南亞入境領隊專業手冊</title>
+    <!-- 引入字體與圖示庫 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a; /* 深藍色 */
+            --accent: #eab308;  /* 專業金 */
+            --bg-color: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #334155;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* 隱藏原生捲軸 */
+        }
+
+        /* 簡報容器：固定比例 16:9 */
+        #presentation-container {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            background-color: var(--bg-color);
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        /* 投影片預設隱藏，帶有淡入動畫 */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            pointer-events: none;
+            transform: translateX(20px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 啟用的投影片 */
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        /* --- 內部排版樣式 --- */
+        .slide-header {
+            padding: 40px 60px 20px;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            border-left: 6px solid var(--accent);
+            padding-left: 1rem;
+            font-weight: 900;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 0 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 網格系統 */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+
+        /* 卡片設計 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            border-top: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3 i { color: var(--accent); font-size: 1.6rem; }
+        
+        .card p, .card li {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #334155;
+        }
+
+        ul.custom-list { list-style: none; }
+        ul.custom-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+        }
+        ul.custom-list li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .highlight-text { color: #b45309; font-weight: bold; }
+        .badge {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #1e293b;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* 封面投影片樣式 */
+        .slide-cover {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+            color: white;
+            align-items: center;
+            text-align: center;
+        }
+        .cover-subtitle { color: var(--accent); font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 20px; font-weight: bold; }
+        .cover-title { font-size: 4rem; font-weight: 900; margin-bottom: 30px; line-height: 1.2; }
+        .cover-date { font-size: 1.2rem; background: rgba(255,255,255,0.1); padding: 10px 30px; border-radius: 30px; }
+
+        /* 導覽列與控制按鈕 */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 60px;
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+        .btn-nav {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn-nav:hover { background: var(--accent); transform: scale(1.1); }
+        .btn-nav:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+
+        .progress-indicator {
+            position: absolute;
+            bottom: 45px;
+            left: 60px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-light);
+            z-index: 10;
+        }
+
+        /* 響應式調整 (為了讓網頁或預覽視窗縮小時也能看) */
+        @media (max-width: 1024px) {
+            .grid-3 { grid-template-columns: 1fr; gap: 15px; }
+            .grid-2 { grid-template-columns: 1fr; gap: 20px; }
+            .slide-title { font-size: 2rem; }
+            .card { padding: 20px; }
+            .card p, .card li { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-container">
+        
+        <!-- Slide 1: 封面 -->
+        <div class="slide slide-cover active">
+            <div class="slide-content">
+                <div class="cover-subtitle">Southeast Asia Guidelines</div>
+                <h1 class="cover-title">東南亞各國入境規定<br><span style="color: var(--accent);">領隊專業實務手冊</span></h1>
+                <p style="font-size: 1.5rem; color: #94a3b8; margin-bottom: 40px;">泰國 ‧ 越南 ‧ 新加坡 ‧ 馬來西亞 ‧ 菲律賓 ‧ 印尼</p>
+                <div class="cover-date">版本：2025 – 2026 專用版</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: 通用規定 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">⚠️ 全區域通用鐵則</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-passport"></i> 護照效期</h3>
+                        <p>各國護照效期均須 <span class="highlight-text">6個月以上</span>。出發前務必於機場再次確認旅客護照狀態。</p>
+                    </div>
+                    <div class="card" style="border-top-color: #ef4444;">
+                        <h3 style="color: #ef4444;"><i class="fa-solid fa-ban"></i> 電子菸禁令</h3>
+                        <p>所有東南亞國家 <span class="highlight-text">嚴禁攜帶電子菸</span> 入境。查獲將面臨高額罰款甚至刑責，請嚴格提醒旅客。</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-bell"></i> 申報規定</h3>
+                        <p>大多數免簽國家，要求旅客於入境前 <span class="highlight-text">72小時內</span> 完成線上入境卡或健康申報填寫。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 泰國 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">泰國 🇹🇭 入境與實務</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <span class="badge">簽證：免簽 (TDAC) / 60天</span>
+                        <span class="badge">匯率：泰銖 1:1</span>
+                        <span class="badge">時差：慢台灣 1 小時</span>
+                        <h3><i class="fa-solid fa-plane-arrival"></i> 通關與接機</h3>
+                        <ul class="custom-list">
+                            <li>走人工通道：<span class="highlight-text">十隻手指皆需按壓指紋</span>。</li>
+                            <li>建議攜帶至少 2 萬泰銖現金以免抽查。</li>
+                            <li>接機實務：出口先看到當地小弟，才會看到導遊。</li>
+                            <li>法規禁忌：<span class="highlight-text">嚴禁大麻、嚴禁攜帶撲克牌(禁賭)</span>。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-file-invoice-dollar"></i> 退稅與回程 (重要)</h3>
+                        <ul class="custom-list">
+                            <li>退稅：總額超2萬<span class="highlight-text">託運前需蓋章</span>；單品超4萬需驗貨。</li>
+                            <li>星宇航空 (JX)：停靠衛星航廈，<span class="highlight-text">退稅務必在主航廈完成</span>。</li>
+                            <li>回程報到：領隊先收護照，導遊統一申辦登機證。</li>
+                            <li>換匯：曼谷導遊不一定可換，清邁導遊通常可換。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: 越南 (簽證矩陣) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">越南 🇻🇳 各區簽證與通關實務</h2>
+            </div>
+            <div class="slide-content">
+                <p style="margin-bottom: 20px; font-size: 1.1rem;">越南因地區不同，簽證與通關形式差異極大，請依照目的地確認：</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-map-location-dot"></i> 北越 & 南越</h3>
+                        <ul class="custom-list">
+                            <li><strong>北越 (公文簽)：</strong>需備2吋照*2。<br>入境拿<span class="highlight-text">粉紅小卡</span>(務必保管)，走 VIP 快通。出境前導遊先收護照。</li>
+                            <li><strong>南越/胡志明 (電子簽)：</strong>走一般快通。<br>通關可能需拍照，請旅客準備好：護照+登機證+電子簽。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-umbrella-beach"></i> 中越 & 芽莊</h3>
+                        <ul class="custom-list">
+                            <li><strong>中越/峴港：</strong>貼紙簽證，走一般快通。</li>
+                            <li><strong>芽莊 (貼紙簽證)：</strong>走 VIP 快通。<br><span class="highlight-text">實務：護照給移民官，至行李轉盤處拿回護照。</span></li>
+                            <li><strong>芽莊機場報到：</strong>華航(CI)/星宇(JX) 自助報到；長榮(BR) 櫃檯報到。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: 越南 (風俗) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">越南 🇻🇳 風俗與生活提醒</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-shoe-prints"></i> 機場安檢</h3>
+                        <p>越南全區出境安全檢查，<span class="highlight-text">皆要求旅客脫鞋</span>，請提前提醒團員配合。</p>
+                        <p style="margin-top: 15px;"><strong>未成年規定：</strong><br>14歲以下若無父母同行，需備妥法定監護人證明。</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-utensils"></i> 飲食與交通</h3>
+                        <ul class="custom-list">
+                            <li>主打復古之旅，路邊攤盡量少吃。</li>
+                            <li>冰塊與飲料請小心飲用。</li>
+                            <li>交通習慣：當地狂按喇叭為<span class="highlight-text">安全提醒</span>。</li>
+                            <li>路邊旗子傾斜鞠躬是為了美觀。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-cloud-sun-rain"></i> 氣候概況</h3>
+                        <ul class="custom-list">
+                            <li><strong>北越：</strong>四季分明</li>
+                            <li><strong>中越：</strong>10-2月為雨季</li>
+                            <li><strong>南越：</strong>5-11月為雨季</li>
+                            <li><strong>富國島：</strong>4-11月雨季 (7-8月雨最大)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: 新加坡 & 馬來西亞 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">星馬 🇸🇬 🇲🇾 規定對照</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <span class="badge">新加坡 🇸🇬 免簽 (SGAC APP)</span>
+                        <h3><i class="fa-solid fa-city"></i> 新加坡實務</h3>
+                        <ul class="custom-list">
+                            <li>停留30天，全程自動通關。無時差。</li>
+                            <li><strong>菸：</strong><span class="highlight-text">全程課稅無免稅額，強烈建議不帶。</span></li>
+                            <li><strong>酒：</strong>不超過 1 公升。</li>
+                            <li><strong>嚴禁：</strong>口香糖禁止攜入。</li>
+                            <li>插座：英規三方扁腳 (需轉接)。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <span class="badge">馬來西亞 🇲🇾 免簽 (MDAC)</span>
+                        <h3><i class="fa-solid fa-mosque"></i> 馬來西亞實務</h3>
+                        <ul class="custom-list">
+                            <li>停留30天，自動通關。無時差。</li>
+                            <li><strong>跨國注意：</strong><span class="highlight-text">從馬國入境新加坡「不可攜帶酒」</span>。</li>
+                            <li><strong>宗教：</strong>回教。女生進清真寺需穿長袍，男生褲子須過膝。</li>
+                            <li><strong>環境：</strong>海島國家蒼蠅多，請先打預防針。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: 菲律賓 & 印尼 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">菲律賓 🇵🇭 & 印尼 🇮🇩</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <span class="badge">菲律賓 🇵🇭 免簽 (eTravel)</span>
+                        <h3><i class="fa-solid fa-water"></i> 菲律賓實務</h3>
+                        <ul class="custom-list">
+                            <li>停留 14 天。<span class="highlight-text">15歲以下需準備英文戶籍謄本正本</span>。</li>
+                            <li>打火機：入境可攜帶，<strong>出境嚴禁攜帶</strong>。</li>
+                            <li>務必請旅客保留「電子機票」備查。</li>
+                            <li>插座同台灣，不需轉接。有收奢侈稅。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <span class="badge">印尼 🇮🇩 落地簽 (50萬盾)</span>
+                        <h3><i class="fa-solid fa-volcano"></i> 印尼實務</h3>
+                        <ul class="custom-list">
+                            <li>需72H前申請健康申明。觀光稅由導遊處理。</li>
+                            <li>時差：雅加達慢1H / 峇里島無時差。</li>
+                            <li><strong>環境：</strong>大自然亮點，蚊蟲極多；餐食重油重鹹。</li>
+                            <li><strong>出境限制：</strong><span class="highlight-text">導遊只能在管制區外，無法進入。</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 控制元件 -->
+        <div class="progress-indicator" id="page-indicator">1 / 7</div>
+        <div class="controls">
+            <button class="btn-nav" id="btn-prev" onclick="prevSlide()" aria-label="上一頁"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="btn-nav" id="btn-next" onclick="nextSlide()" aria-label="下一頁"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+    </div>
+
+    <!-- 簡易 JavaScript 控制簡報邏輯 -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const pageIndicator = document.getElementById('page-indicator');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        function updatePresentation() {
+            // 移除所有 active class
+            slides.forEach(slide => slide.classList.remove('active'));
+            // 加入當前 active class
+            slides[currentSlide].classList.add('active');
+            
+            // 更新頁碼
+            pageIndicator.innerText = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // 更新按鈕狀態
+            btnPrev.disabled = currentSlide === 0;
+            btnNext.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updatePresentation();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updatePresentation();
+            }
+        }
+
+        // 監聽鍵盤左右鍵
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === 'Space') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 初始化
+        updatePresentation();
+    </script>
+
+</body>
+</html>
