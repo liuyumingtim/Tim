@@ -432,4 +432,85 @@
                         <span class="badge">菲律賓 🇵🇭 免簽 (eTravel)</span>
                         <h3><i class="fa-solid fa-water"></i> 菲律賓實務</h3>
                         <ul class="custom-list">
-                            <li>停留 14 天。<span class="highlight-text">15歲以下需準備英文戶籍謄本正
+                            <li>停留 14 天。<span class="highlight-text">15歲以下需準備英文戶籍謄本正本</span>。</li>
+                            <li>打火機：入境可攜帶，<strong>出境嚴禁攜帶</strong>。</li>
+                            <li>務必請旅客保留「電子機票」備查。</li>
+                            <li>插座同台灣，不需轉接。有收奢侈稅。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <span class="badge">印尼 🇮🇩 落地簽 (50萬盾)</span>
+                        <h3><i class="fa-solid fa-volcano"></i> 印尼實務</h3>
+                        <ul class="custom-list">
+                            <li>需72H前申請健康申明。觀光稅由導遊處理。</li>
+                            <li>時差：雅加達慢1H / 峇里島無時差。</li>
+                            <li><strong>環境：</strong>大自然亮點，蚊蟲極多；餐食重油重鹹。</li>
+                            <li><strong>出境限制：</strong><span class="highlight-text">導遊只能在管制區外，無法進入。</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-indicator" id="page-indicator">1 / 7</div>
+        <div class="controls">
+            <button class="btn-nav" id="btn-prev" onclick="prevSlide()" aria-label="上一頁"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="btn-nav" id="btn-next" onclick="nextSlide()" aria-label="下一頁"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const pageIndicator = document.getElementById('page-indicator');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        function updatePresentation() {
+            // 移除所有 active class
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.scrollTop = 0; // 切換投影片時，將捲軸拉回最上方
+            });
+            // 加入當前 active class
+            slides[currentSlide].classList.add('active');
+            
+            // 更新頁碼
+            pageIndicator.innerText = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // 更新按鈕狀態
+            btnPrev.disabled = currentSlide === 0;
+            btnNext.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updatePresentation();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updatePresentation();
+            }
+        }
+
+        // 監聽鍵盤左右鍵
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === 'Space') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 初始化
+        updatePresentation();
+    </script>
+
+</body>
+</html>
