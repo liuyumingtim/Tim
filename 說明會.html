@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YoYo 領隊隨身教戰手冊</title>
+    <style>
+        :root {
+            --primary-blue: #004a99;
+            --primary-red: #e60012;
+            --bg-color: #f4f7f9;
+            --text-main: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+        /* 頂部固定導航欄 */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .header-title {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            border-bottom: 1px solid #eee;
+        }
+        .tab-container {
+            display: flex;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px 0;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #888;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--primary-red);
+            border-bottom: 3px solid var(--primary-red);
+            background-color: #fff9f9;
+        }
+        /* 內容區塊 */
+        .content-section {
+            display: none;
+            padding: 15px;
+            padding-bottom: 60px; /* 預留底部空間 */
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 卡片設計 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .card-title {
+            font-size: 1.15rem;
+            color: var(--primary-blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 10px;
+        }
+        .card-title .icon {
+            margin-right: 8px;
+        }
+        /* 話術框 */
+        .script-box {
+            background-color: #eaf3ff;
+            border-left: 4px solid var(--primary-blue);
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        /* 清單樣式 */
+        ul {
+            padding-left: 0;
+            list-style: none;
+            margin: 0;
+        }
+        li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.95rem;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .badge-red {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: normal;
+            margin-left: 5px;
+        }
+        .badge-blue {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+        .highlight {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">YoYo 領隊隨身教戰手冊</div>
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('phone')" id="btn-phone">📞 電話說明會</button>
+            <button class="tab-btn" onclick="switchTab('airport')" id="btn-airport">✈️ 機場說明會</button>
+        </div>
+    </div>
+
+    <div id="phone" class="content-section active">
+        
+        <div class="card">
+            <h2 class="card-title"><span class="icon">📱</span>一、通話開場</h2>
+            <div class="script-box">
+                「您好，請問是報名可樂旅遊 X/X 出發前往 <城市> 的 X 先生/小姐嗎？我是領隊 YoYo，請問現在方便耽誤您 3~5 分鐘進行電話說明會嗎？」
+            </div>
+            <ul>
+                <li>✔️ 若不方便：詢問稍後幾點方便回撥。</li>
+                <li>✔️ 連打三通未接：改傳送簡訊通知。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">🎒</span>二、當地注意事項 (核心重點)</h2>
+            <ul>
+                <li><strong>🌡️ 氣溫穿著：</strong> 當地夏天 (24-34度)，室內冷氣強請帶<span class="highlight">薄外套</span>。</li>
+                <li><strong>🦟 必備防護：</strong> 東南亞蚊蟲多，必帶<span class="highlight">防蚊液</span>；午後雷陣雨請備<span class="highlight">雨具、防曬</span>。</li>
+                <li><strong>👟 隨身物品：</strong> 好走的運動鞋、隨身背包、水瓶 (機場裝水)。</li>
+                <li><strong>💊 個人藥品：</strong> 腸胃藥/止痛藥等常備藥 <span class="badge-red">放隨身手提</span>。</li>
+                <li><strong>🔌 插座電壓：</strong> 插座同台灣，但<span class="highlight">電壓 220V</span> (台灣吹風機不可用)，備萬用轉接頭。</li>
+                <li><strong>💵 換匯準備：</strong> 準備台幣現金，<span class="highlight">當地直接跟導遊換</span>。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">✈️</span>三、結尾與集合提醒</h2>
+            <div class="script-box">
+                「最後提醒您，集合時間是 X/X 的 XX:XX，在桃園機場第 X 航廈 XX 櫃台。出發前請再次確認『最新且沒過期』的護照有帶在身上喔！我們機場見。」
+            </div>
+        </div>
+    </div>
+
+    <div id="airport" class="content-section">
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">⏱️</span>一、前置行政 (集合前 1 小時)</h2>
+            <ul>
+                <li><strong>報到交接：</strong> 完成預辦登機、與送機人員確認交接事宜。</li>
+                <li><strong>發放物資：</strong> 登機證 (告知組別)、護照(含護照套)、行李束帶。</li>
+                <li><strong>收集文件：</strong> 收簽證用大頭貼、水上活動切結書簽名。</li>
+                <li><strong>建立連結：</strong> 引導旅客掃描加入 <span class="badge-blue">LINE 群組</span>。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">🗣️</span>二、正式說明會 (準時開始)</h2>
+            <div class="script-box">
+                「大家好！我是領隊幼又 (YoYo)，請認明『可樂旅遊隊旗』。看一下左右鄰居，這幾天我們就是家人了！這趟我們開開心心出門，平平安安回家，有問題隨時找我。」
+            </div>
+            <ul>
+                <li><strong>確認機票：</strong> 核對登機證<span class="highlight">英文姓名</span>！確認登機門、時間、區域。</li>
+                <li><strong>機位餐食：</strong> 團體機位已盡力安排，若未達預期請見諒；確認特殊餐食。</li>
+                <li><strong>財物藥品：</strong> 錢包護照手機務必顧好；藥品<span class="highlight">分散放置</span>(托運/隨身各半)。</li>
+                <li><strong>當地資訊：</strong> 時差、天氣防曬、路邊攤衛生、換匯。需協助安裝網卡可找領隊。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">🧳</span>三、行李法規與出境流程</h2>
+            <div class="script-box">
+                「稍後去自助櫃檯掛行李，地勤與我會協助大家。掛完行李後，請務必『看螢幕確認過 X 光機』再上樓出境！」
+            </div>
+            <ul>
+                <li><strong>📦 託運 (大行李)：</strong> 尖銳物品、大於100ml液體放此。</li>
+                <li><strong>👜 隨身 (手提) <span class="badge-red">嚴禁託運</span>：</strong> 鋰電池、行動電源、筆電平板、打火機(限1個普通型)。</li>
+                <li><strong>💧 隨身液體：</strong> 單件不可超過100ml，需裝入透明夾鏈袋。</li>
+                <li><strong>🈲 入境嚴禁：</strong> 肉類、水果、電子煙/加熱菸 <span class="badge-red">絕對不可帶</span>。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">🛬</span>四、抵達當地入境引導</h2>
+            <div class="script-box">
+                「飛機降落後，我會在『空橋出來的地方』舉著可樂旗子等大家，到齊後一起去洗手間跟通關。」
+            </div>
+            <ul>
+                <li><strong>👮 移民關通關：</strong> 準備好護照簽證。<span class="badge-red">嚴禁拍照</span>！</li>
+                <li><strong>🧳 提領行李：</strong> 確認航班轉盤，拿到行李先<span class="highlight">檢查是否有損壞</span>。</li>
+                <li><strong>🚌 乘車規範：</strong> 拿取當天所需物品；上 42 人座巴士，<span class="highlight">請從第二排開始入座</span>。</li>
+                <li><strong>🤝 會合：</strong> 確認人數，與當地導遊會合，準備展開旅程！</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // 隱藏所有內容
+            document.querySelectorAll('.content-section').forEach(function(section) {
+                section.classList.remove('active');
+            });
+            // 移除所有按鈕的 active 狀態
+            document.querySelectorAll('.tab-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            // 顯示被點擊的內容
+            document.getElementById(tabId).classList.add('active');
+            // 讓被點擊的按鈕反白
+            document.getElementById('btn-' + tabId).classList.add('active');
+            
+            // 切換時自動滾動到最頂部
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
