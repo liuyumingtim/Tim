@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專業領隊帶團標準流程</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* 加入簡單的淡入動畫讓切換更順暢 */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 自訂滾動條，讓左側選單更美觀 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <!-- 頂部標題列 -->
+    <header class="bg-blue-700 text-white shadow-md sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i data-lucide="plane-takeoff" class="w-8 h-8"></i>
+                <h1 class="text-2xl font-bold tracking-wide">專業領隊帶團標準流程</h1>
+            </div>
+            <span class="hidden md:inline-block text-blue-200 text-sm">實戰教戰手冊</span>
+        </div>
+    </header>
+
+    <!-- 主要內容區 -->
+    <main class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row gap-6">
+            
+            <!-- 左側/上方：按鈕選單區 -->
+            <nav class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible custom-scrollbar pb-2 md:pb-0">
+                <!-- 按鈕列表 -->
+                <button class="tab-btn active whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-blue-600 text-white shadow-md font-semibold" data-target="step-1">
+                    <div class="bg-white/20 p-1.5 rounded-lg"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
+                    1. 交團：行前準備
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-2">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="phone-call" class="w-5 h-5"></i></div>
+                    2. 整理旅客資料(電說)
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-3">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div>
+                    3. 當天機場(前置作業)
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-4">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="users" class="w-5 h-5"></i></div>
+                    4. 當天機場(說明會)
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-5">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                    5. 入境他國空橋集合
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-6">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="luggage" class="w-5 h-5"></i></div>
+                    6. 入境後，轉盤集合
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-7">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="bus" class="w-5 h-5"></i></div>
+                    7. 上車詞
+                </button>
+                <button class="tab-btn whitespace-nowrap md:whitespace-normal flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700 border border-slate-200" data-target="step-8">
+                    <div class="bg-slate-100 p-1.5 rounded-lg icon-bg"><i data-lucide="bell-ring" class="w-5 h-5"></i></div>
+                    8. 下車詞
+                </button>
+            </nav>
+
+            <!-- 右側/下方：內容展示區 -->
+            <div class="w-full md:w-2/3 lg:w-3/4 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 min-h-[500px]">
+                
+                <!-- 內容 1 -->
+                <div id="step-1" class="tab-content fade-in block">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="briefcase"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">1. 交團：行前準備</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        這是整個行程的地基，出發前務必與公司內部（OP/線控/業務）確認所有細節。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">點交文件</strong> 確實核對機票名單、護照（若由公司保管）、飯店確認單（Voucher）、行程表、當地導遊與司機聯絡資訊。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">確認特殊需求</strong> 仔細檢查名單上的備註，例如：素食、不吃牛、海鮮過敏、特殊床型需求（一大床/兩小床）、輪椅需求等。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">了解客群結構</strong> 分析這團是家族旅遊、員工旅遊還是散客拼團，有沒有長輩或小孩？這有助於拿捏帶團的風格與說話語氣。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">準備個人裝備</strong> 領隊旗、醫藥包（僅限外用藥與基本包紮）、麥克風、名牌、轉接頭等。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 2 -->
+                <div id="step-2" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="phone-call"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">2. 整理旅客資料（電話說明會）</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        出發前 3~5 天進行，這是建立旅客信任感的第一接觸點。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="message-square" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">開場與核對</strong> <span class="text-blue-700 font-medium">「您好，我是您這次行程的領隊ＯＯＯ。跟您核對一下，這次同行的是不是總共Ｏ位？餐食上有沒有特殊禁忌呢？」</span></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="info" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong class="text-slate-900 block text-lg">實用資訊提醒</strong>
+                                <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-600">
+                                    <li><strong>氣候穿著：</strong> 當地天氣概況、該帶厚外套還是薄長袖、是否容易下雨。</li>
+                                    <li><strong>電壓插座：</strong> 當地插座形狀，是否需要自備轉接頭。</li>
+                                    <li><strong>貨幣匯率：</strong> 建議帶多少現金、帶美金還是台幣去當地換比較划算。</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5"></i>
+                            <div class="bg-red-50 w-full p-4 rounded-lg border border-red-100">
+                                <strong class="text-red-700 block text-lg">★ 最重要任務 - 集合資訊</strong> 
+                                清楚告知<strong>「日期、時間、機場航廈、幾號櫃檯」</strong>，並請客人務必提早抵達。留下領隊的手機號碼以便當天聯繫。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 3 -->
+                <div id="step-3" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="clipboard-check"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">3. 當天機場（前置作業）</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        領隊必須比客人早到（通常起飛前 2.5 ~ 3 小時），將繁瑣的行政作業先處理好。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">報到與劃位</strong> 至航空公司櫃檯辦理團體 Check-in，拿取全團登機證。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">整理證件</strong> 將護照、登機證、行李牌、出入境卡（若有實體卡）依據家庭或同行者分裝好。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">場地場勘</strong> 確認集合地點的動線，找一個不擋路且顯眼的地方舉旗等待客人。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 4 -->
+                <div id="step-4" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="users"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">4. 當天機場（說明會）</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        客人陸續抵達後，在掛行李前進行的重點佈達。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="file-warning" class="w-6 h-6 text-orange-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">發放與檢查</strong> 發放護照與登機證，<strong class="text-red-600">立刻請客人核對英文名字是否與護照完全一致</strong>（這點最重要，錯了會上不了飛機）。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="shield-alert" class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5"></i>
+                            <div class="bg-red-50 w-full p-4 rounded-lg border border-red-100">
+                                <strong class="text-red-700 block text-lg mb-2">行李安檢宣導（紅線提醒）</strong>
+                                <ul class="list-disc pl-5 space-y-1 text-slate-800">
+                                    <li><strong>不可託運（必須隨身）：</strong> 行動電源、備用鋰電池、打火機（限1個）、電子菸（依各國法規，如泰國/新加坡嚴禁攜帶）。</li>
+                                    <li><strong>必須託運（不可隨身）：</strong> 剪刀、水果刀、超過 100ml 的液體/噴霧/膠狀物。</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="plane" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong class="text-slate-900 block text-lg">通關與登機門宣佈</strong> 說明接下來過安檢、海關的動線。
+                                <div class="mt-2 text-blue-700 font-medium">「各位貴賓，我們的登機門是 <strong>ＯＯ號</strong>，請大家逛免稅店要注意時間，務必在 <strong>Ｏ點Ｏ分</strong> 前抵達登機門集合。」</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 5 -->
+                <div id="step-5" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="map-pin"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">5. 入境他國空橋集合</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        剛下飛機客人最容易走散，這裡是重新聚攏團隊的關鍵點。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="flag" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">把關攔截</strong> 領隊通常盡量提早下機，站在空橋出口處或登機門旁，舉旗攔截客人。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="users" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">清點人數</strong> 確認全數到齊後再一起移動。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="droplets" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">洗手間管理</strong> <span class="text-blue-700 font-medium">「大家先不要急著去上廁所，我們往前走一段，到海關前會有比較大的洗手間，我們統一在那邊上。」</span></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="ban" class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">海關規定提醒</strong> 提醒準備好護照（脫掉護照套）與入境卡/簽證。<strong class="text-red-600">嚴格警告海關區域絕對禁止拍照、講電話</strong>。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 6 -->
+                <div id="step-6" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="luggage"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">6. 入境後，行李轉盤集合</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        順利過海關後的最後一道機場關卡。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="search" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">尋找轉盤</strong> 看螢幕確認班機對應的行李轉盤號碼，帶領客人前往。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-orange-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">協助與檢查</strong> 幫忙客人將行李拉下轉盤。<strong class="text-orange-600">請客人務必立刻檢查行李箱是否有破損、輪子是否掉落</strong>。（若有損壞，領隊需立刻帶客人去行李服務櫃檯開立證明）。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="users" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">最後清點</strong> 全員行李都拿到後，再次清點人數。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="arrow-right-circle" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">出關引導</strong> <span class="text-blue-700 font-medium">「請大家推著行李跟著我的旗子走，我們準備出去見當地的導遊囉！」</span></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 7 -->
+                <div id="step-7" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="bus"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">7. 上車詞</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        旅客坐定後的第一個正式問候，定調整個行程的氛圍。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="mic" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">熱情迎賓</strong> <span class="text-blue-700 font-medium">「各位貴賓，歡迎來到美麗的（國家/城市）！大家搭飛機辛苦了。」</span></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="users" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong class="text-slate-900 block text-lg">介紹黃金鐵三角</strong>
+                                <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-600">
+                                    <li><strong>自己：</strong> 再次自我介紹，建立親切感。</li>
+                                    <li><strong>當地導遊：</strong> 隆重介紹當地導遊，將麥克風的主導權優雅地過渡給他。</li>
+                                    <li><strong>司機：</strong> 介紹司機大哥，記住車牌號碼，並請客人給予司機熱烈掌聲。</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="shield" class="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">車上安全宣導</strong> 提醒繫妥安全帶，行進間請勿走動，介紹車上垃圾桶與逃生門位置。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">行程預告</strong> 簡單說明現在要前往哪裡（飯店還是餐廳？車程多久？），讓客人有心理準備，隨後將時間交給當地導遊。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 內容 8 -->
+                <div id="step-8" class="tab-content hidden fade-in">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i data-lucide="bell-ring"></i></div>
+                        <h2 class="text-2xl font-bold text-slate-800">8. 下車詞</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 bg-slate-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        每次到達景點或餐廳前的必備叮嚀，確保團隊不走失、物品不遺漏。
+                    </p>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="sun" class="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">喚醒注意</strong> <span class="text-blue-700 font-medium">「各位貴賓，我們即將抵達目的地，請大家慢慢睜開眼睛，伸個懶腰。」</span></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="camera" class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">景點/餐廳簡介</strong> 簡單提示下車後的地點特性（例如：扒手多請顧好包包、進寺廟要脫鞋、餐廳動線等）。</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="clock" class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5"></i>
+                            <div class="bg-red-50 w-full p-4 rounded-lg border border-red-100">
+                                <strong class="text-red-700 block text-lg mb-2">★ 靈魂指令 - 集合時地</strong>
+                                <ul class="space-y-1 text-slate-800">
+                                    <li>「現在時間是 Ｏ點Ｏ分，請大家對一下手錶。」</li>
+                                    <li><strong class="text-red-600">「我們 Ｏ點Ｏ分，在 （明顯地標/原車上） 集合！」</strong>（務必重複兩次，並請客人點頭示意聽到）。</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="package-search" class="w-6 h-6 text-orange-500 flex-shrink-0 mt-0.5"></i>
+                            <div><strong class="text-slate-900 block text-lg">防丟提醒</strong> <span class="text-blue-700 font-medium">「下車前，請回頭看一下座位，手機、錢包、護照、隨身物品有沒有帶好，別留在車上喔！」</span></div>
+                        </li>
+                    </ul>
+                    <div class="mt-8 text-center text-slate-500 italic text-sm">
+                        保持微笑、臨危不亂、口齒清晰，這八個步驟就是您帶領團隊順利出發與抵達的最佳護身符！
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 腳本：處理按鈕點擊切換邏輯 -->
+    <script>
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. 重置所有按鈕樣式 (改回未選取狀態)
+                    buttons.forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'font-semibold', 'active');
+                        b.classList.add('bg-white', 'text-slate-600', 'hover:bg-blue-50', 'hover:text-blue-700', 'border', 'border-slate-200');
+                        
+                        // 處理圖標背景
+                        const iconBg = b.querySelector('div');
+                        iconBg.classList.remove('bg-white/20');
+                        iconBg.classList.add('bg-slate-100');
+                    });
+
+                    // 2. 隱藏所有內容區塊
+                    contents.forEach(c => {
+                        c.classList.add('hidden');
+                        c.classList.remove('block');
+                    });
+
+                    // 3. 設定當前點擊的按鈕為選取狀態
+                    btn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-blue-50', 'hover:text-blue-700', 'border', 'border-slate-200');
+                    btn.classList.add('bg-blue-600', 'text-white', 'shadow-md', 'font-semibold', 'active');
+                    
+                    const activeIconBg = btn.querySelector('div');
+                    activeIconBg.classList.remove('bg-slate-100');
+                    activeIconBg.classList.add('bg-white/20');
+
+                    // 4. 顯示對應的內容區塊
+                    const targetId = btn.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    targetContent.classList.remove('hidden');
+                    targetContent.classList.add('block');
+                    
+                    // 若在手機版點擊，稍微將畫面往下捲動以顯示內容
+                    if(window.innerWidth < 768) {
+                        targetContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
