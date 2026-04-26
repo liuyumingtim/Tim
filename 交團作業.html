@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>可樂旅遊 帶團全流程作業清單</title>
+<style>
+  :root {
+    --primary: #004a99; /* 可樂藍 */
+    --primary-light: #e6f0fa;
+    --accent: #e60012; /* 可樂紅 */
+    --bg: #f4f7f9;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #888888;
+    --border: #e0e5eb;
+    --success: #1D9E75;
+    --success-light: #d4ede0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif; 
+    background: var(--bg); 
+    color: var(--text-main); 
+    min-height: 100vh; 
+    padding-bottom: 2rem;
+  }
+  
+  /* 頂部固定導航與進度區 */
+  .header-sticky {
+    position: sticky;
+    top: 0;
+    background: var(--card-bg);
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 15px 15px 0 15px;
+  }
+  .header-title { font-size: 18px; font-weight: bold; color: var(--primary); margin-bottom: 10px; }
+  
+  /* 頁籤滑動區 */
+  .tabs-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+  .tabs-wrapper::-webkit-scrollbar { display: none; } /* Chrome */
+  .tab {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab.active { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+  
+  /* 進度條 */
+  .progress-container { margin-top: 10px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+  .progress-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .progress-bar-wrap { height: 6px; background: #eaedf1; border-radius: 99px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--success); border-radius: 99px; transition: width 0.3s ease; }
+
+  /* 內容區 */
+  .content { padding: 15px; }
+  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .tab-pane.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  .group { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid var(--border); }
+  .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .group-title { font-size: 14px; font-weight: bold; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 8px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; background: #eee; color: #666; }
+  .badge.done { background: var(--success-light); color: var(--success); }
+
+  /* 項目樣式 */
+  .item { 
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; 
+    border-bottom: 1px dashed var(--border); cursor: pointer; transition: opacity 0.2s; 
+  }
+  .item:last-child { border-bottom: none; padding-bottom: 0; }
+  .item.checked { opacity: 0.5; }
+  .item.checked .item-text-main { text-decoration: line-through; color: #aaa; }
+  
+  .checkbox { 
+    width: 20px; height: 20px; border-radius: 6px; border: 2px solid #ccc; 
+    flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; 
+    transition: all 0.2s; background: #fff;
+  }
+  .item.checked .checkbox { background: var(--success); border-color: var(--success); }
+  .checkmark { display: none; }
+  .item.checked .checkmark { display: block; }
+  
+  .item-content { flex: 1; }
+  .item-text-main { font-size: 14.5px; color: var(--text-main); line-height: 1.4; }
+  .item-note { font-size: 12px; color: #d35400; background: #fdf2e9; display: inline-block; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
+  .item-info { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
+
+  /* 特殊提示框 */
+  .alert-box { background: #fff5f5; border: 1px solid #f5c6c6; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
+  .alert-title { font-size: 13px; font-weight: bold; color: var(--accent); margin-bottom: 6px; }
+  .alert-text { font-size: 12.5px; color: var(--text-main); margin-bottom: 4px; display: flex; gap: 5px; }
+  .alert-text::before { content: "•"; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="header-sticky">
+  <div class="header-title">YoYo 帶團全流程作業</div>
+  
+  <div class="tabs-wrapper" id="tab-nav">
+    </div>
+
+  <div class="progress-container">
+    <div class="progress-row">
+      <span id="current-phase-name">當前階段進度</span>
+      <span id="progress-text">0 / 0</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="content" id="app-content">
+  </div>
+
+<script>
+const CHECKMARK = `<svg class="checkmark" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+// --- 核心資料庫 (完美整合兩份文件) ---
+const tourData = [
+  {
+    id: 'tab_prep', name: '1️⃣ 交團與出發前',
+    sections: [
+      {
+        title: '交接流程與確認', key: 'prep_flow',
+        items: [
+          { text: '事先與 OP 人員確認交接時間', note: '出發前2-3天到公司' },
+          { text: '核對合約行程表與保險資料', note: '線上版最詳細、確認保險姓名日期' },
+          { text: '航班劃位確認', info: '長榮需印登機證放信封；華航、星宇只需選位' },
+          { text: '確認飯店房間安排與特殊餐食需求' },
+          { text: '按團員明細表分配組數', info: '可直接寫於護照套上方便點名' },
+          { text: '依旅客需求進行電話說明會' },
+          { text: '聯繫當地導遊確認出團細節' }
+        ]
+      },
+      {
+        title: '點收交團資料袋', key: 'prep_docs',
+        items: [
+          { text: '團體總表、機票 PNR、分房表、團員明細' },
+          { text: '行程合約書、說明會資料、保險資料' },
+          { text: '確認簽證資料 (依地區)', note: '很重要' },
+          { text: '團體交接表' }
+        ]
+      },
+      {
+        title: '準備其他物品', key: 'prep_misc',
+        items: [
+          { text: '行李束帶', note: '領隊要自行帶走去機場發' },
+          { text: '確認護照套與護照正本齊全' },
+          { text: '東南亞線準備綠色袋子' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'tab_dep', name: '2️⃣ 機場與飛行',
+    sections: [
+      {
+        title: '機場前置與佔位', key: 'dep_prep',
+        items: [
+          { text: '找送機人員拿團包 (領隊File夾)' },
+          { text: '準備好行李束帶準備發放' },
+          { text: '找好顯眼位置佔位、擺陣', info: '讓旅客一進來就能看到' },
+          { text: '確認航廈位置與遊覽車動線', info: 'T1(CI/IT)、T2(BR送機在長榮/JX在華航, 遊覽車在P4)、T3(JX/BR多, 無吸菸室)' },
+          { text: '詢問領隊機位是否可以換座位' }
+        ]
+      },
+      {
+        title: '報到與機場說明會', key: 'dep_checkin',
+        items: [
+          { text: '確認旅客抵達並收護照', note: 'CI/BR看簽證收、星宇全收' },
+          { text: '核對旅客名單並邀請加入 LINE 群組' },
+          { text: '發放行李束帶' },
+          { text: '進行機場說明會' },
+          { text: '帶領托運行李，並確認通過 X光機' },
+          { text: '引導通關出境至候機室等待' }
+        ]
+      },
+      {
+        title: '機上作業', key: 'dep_flight',
+        items: [
+          { text: '與地勤確認全團旅客是否皆已登機' },
+          { text: '起飛後確認旅客餐食是否正確' },
+          { text: '有空檔巡視一下團員狀況' },
+          { text: '索取機上物品', info: '若是包團，可索取提供給當團小孩' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'tab_local', name: '3️⃣ 當地帶團作業',
+    sections: [
+      {
+        title: '抵達與入境通關', key: 'local_arr',
+        items: [
+          { text: '下機找集合點，詢問是否需上廁所' },
+          { text: '宣達入境規定與簽證準備', note: '海關嚴禁拍照' },
+          { text: '引導過移民關 (壓指紋/拍照)' },
+          { text: '行李轉盤集合，拿到行李確認無破損', note: '先不要自己出去' },
+          { text: '宣導當地入境菸酒規定' },
+          { text: '聯絡導遊，帶領全團過海關上車' }
+        ]
+      },
+      {
+        title: '遊覽車與行程運作', key: 'local_bus',
+        items: [
+          { text: '遊覽車座位安排', info: '請旅客從第二排開始坐' },
+          { text: '上車宣導 (可選)', info: '時差、護照貴重物品、安全須知，後交接給導遊' },
+          { text: '有空時與導遊核對後續行程細節' },
+          { text: 'LINE 群組佈達', info: '集合時間、地點、車程時間' },
+          { text: '景點注意事項提醒', info: '廁所位置、建議穿著、走路小心' },
+          { text: '自費項目說明', note: '車上先說清楚，先收錢再體驗' }
+        ]
+      },
+      {
+        title: '餐食與飯店作業', key: 'local_hotel',
+        items: [
+          { text: '引導進入餐廳，注意出餐速度' },
+          { text: '核對菜色與數量是否與合約一致' },
+          { text: '確認特殊餐食與生日蛋糕(視情況)安排' },
+          { text: '抵達飯店，依照組別發放房卡' },
+          { text: '飯店事項佈達', info: '早餐/集合時間、叫早、設施、Mini bar收費' },
+          { text: '提供領隊房號並進行查房', info: '高級飯店若無法查房可用LINE回報確認' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'tab_ret', name: '4️⃣ 回程與結案',
+    sections: [
+      {
+        title: '回程前夕與機場路上', key: 'ret_pre',
+        items: [
+          { text: '行程結束前一天，回飯店路上宣達回國事項' },
+          { text: '收取保護費 (小費)' },
+          { text: '前往機場路上進行謝車詞', info: '感謝旅客與導遊、提醒填寫意見調查表' },
+          { text: '當地機場說明登機時間與登機門' }
+        ]
+      },
+      {
+        title: '抵台與繳回作業', key: 'ret_arr',
+        items: [
+          { text: '抵台後，在行李轉盤等待大家' },
+          { text: '確認每位旅客拿到行李無問題後才離開' },
+          { text: '繳回旅客名單與相關切結書' }
+        ]
+      },
+      {
+        title: '返國報告書與通報', key: 'ret_report',
+        customHtml: `
+          <div class="alert-box">
+            <div class="alert-title">⏰ 報告書繳交期限</div>
+            <div class="alert-text">當天 18:00 前降落 → 當晚 23:59 前完成</div>
+            <div class="alert-text">當天 18:00 後降落 → 隔天 11:59 前完成</div>
+          </div>
+        `,
+        items: [
+          { text: '確認旅客意見調查表已填寫完畢', note: '當晚 23:59 失效' },
+          { text: '回報遊覽車公司、座位數、車號及司機姓名' },
+          { text: '填寫行程中事件回報', info: '內容簡單扼要即可' },
+          { text: '如有就醫情況，需立即通報公司', note: '最重要' }
+        ]
+      }
+    ]
+  }
+];
+
+// --- 狀態管理 ---
+const state = {};
+let currentTabId = tourData[0].id;
+
+// --- 初始化渲染 ---
+function init() {
+  const nav = document.getElementById('tab-nav');
+  const content = document.getElementById('app-content');
+  
+  tourData.forEach((tab, index) => {
+    // 建立導航按鈕
+    const btn = document.createElement('div');
+    btn.className = `tab ${index === 0 ? 'active' : ''}`;
+    btn.textContent = tab.name;
+    btn.onclick = () => switchTab(tab.id);
+    btn.id = `nav-${tab.id}`;
+    nav.appendChild(btn);
+
+    // 建立內容區塊
+    const pane = document.createElement('div');
+    pane.className = `tab-pane ${index === 0 ? 'active' : ''}`;
+    pane.id = `pane-${tab.id}`;
+    
+    tab.sections.forEach(sec => {
+      let secHtml = `<div class="group">
+        <div class="group-header">
+          <div class="group-title">${sec.title}</div>
+          <div class="badge" id="badge-${sec.key}">0/${sec.items.length}</div>
+        </div>`;
+      
+      if(sec.customHtml) secHtml += sec.customHtml;
+
+      sec.items.forEach((item, i) => {
+        const itemId = `${sec.key}-${i}`;
+        state[itemId] = false; // 預設未勾選
+        secHtml += `
+          <div class="item" id="item-${itemId}" onclick="toggleItem('${itemId}', '${sec.key}', '${tab.id}')">
+            <div class="checkbox">${CHECKMARK}</div>
+            <div class="item-content">
+              <div class="item-text-main">${item.text} ${item.note ? `<span class="item-note">${item.note}</span>` : ''}</div>
+              ${item.info ? `<div class="item-info">${item.info}</div>` : ''}
+            </div>
+          </div>
+        `;
+      });
+      secHtml += `</div>`;
+      pane.innerHTML += secHtml;
+    });
+    content.appendChild(pane);
+  });
+  
+  updateProgress(currentTabId);
+}
+
+// --- 互動邏輯 ---
+function switchTab(tabId) {
+  currentTabId = tabId;
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById(`nav-${tabId}`).classList.add('active');
+  document.getElementById(`pane-${tabId}`).classList.add('active');
+  
+  // 自動將標籤捲動到可視範圍
+  document.getElementById(`nav-${tabId}`).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  
+  updateProgress(tabId);
+}
+
+function toggleItem(itemId, secKey, tabId) {
+  state[itemId] = !state[itemId];
+  document.getElementById(`item-${itemId}`).classList.toggle('checked', state[itemId]);
+  
+  // 更新該區塊的 Badge
+  const sec = tourData.find(t => t.id === tabId).sections.find(s => s.key === secKey);
+  const doneCount = sec.items.filter((_, i) => state[`${secKey}-${i}`]).length;
+  const badge = document.getElementById(`badge-${secKey}`);
+  badge.textContent = `${doneCount}/${sec.items.length}`;
+  badge.classList.toggle('done', doneCount === sec.items.length);
+  
+  updateProgress(tabId);
+}
+
+function updateProgress(tabId) {
+  const tab = tourData.find(t => t.id === tabId);
+  let total = 0;
+  let done = 0;
+  
+  tab.sections.forEach(sec => {
+    total += sec.items.length;
+    done += sec.items.filter((_, i) => state[`${sec.key}-${i}`]).length;
+  });
+  
+  document.getElementById('current-phase-name').textContent = tab.name.substring(3) + '進度';
+  document.getElementById('progress-text').textContent = `${done} / ${total}`;
+  document.getElementById('progress-bar').style.width = total === 0 ? '0%' : `${Math.round((done/total)*100)}%`;
+}
+
+// 啟動APP
+init();
+</script>
+</body>
+</html>
