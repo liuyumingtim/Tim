@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS 派團系統操作指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, '微軟正黑體', sans-serif; }
+        .pulse-border {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen p-4 md:p-8 flex items-center justify-center">
+
+    <main class="max-w-4xl w-full">
+        <!-- 標題區塊 -->
+        <header class="bg-gradient-to-r from-blue-700 to-blue-900 rounded-t-2xl p-6 md:p-8 text-white shadow-lg relative overflow-hidden">
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
+                    <i data-lucide="monitor-smartphone" class="w-8 h-8 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold tracking-wide mb-1">BTS 派團系統操作指南</h1>
+                    <p class="text-blue-200 text-sm md:text-base">可樂旅遊專屬・領隊接案與結案標準作業程序</p>
+                </div>
+            </div>
+            <!-- 裝飾背景 -->
+            <i data-lucide="network" class="absolute -right-4 -top-4 w-32 h-32 text-white/10 transform rotate-12"></i>
+        </header>
+
+        <!-- 內容區塊 -->
+        <div class="bg-white rounded-b-2xl shadow-xl p-6 md:p-8 space-y-6 md:space-y-8">
+            
+            <!-- 區塊一：系統介面佈局 -->
+            <section>
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-slate-100 pb-2">
+                    <i data-lucide="layout-template" class="text-blue-500"></i> 1. 系統介面架構
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                        <h3 class="font-bold text-blue-800 text-lg mb-1">上半部：未結案團體</h3>
+                        <p class="text-slate-600">包含<span class="font-semibold text-blue-700">準備出發</span>或<span class="font-semibold text-blue-700">正在執行中</span>的團體，這是日常作業最常使用的區塊。</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-slate-400"></div>
+                        <h3 class="font-bold text-slate-700 text-lg mb-1">下半部：已結案團體</h3>
+                        <p class="text-slate-500">所有已經完成報帳、結案與報告填寫的<span class="font-semibold">歷史帶團紀錄</span>。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區塊二：行前資訊準備 -->
+            <section>
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-slate-100 pb-2">
+                    <i data-lucide="clipboard-search" class="text-blue-500"></i> 2. 行前四大核心資訊 (系統上半部)
+                </h2>
+                <p class="text-slate-600 mb-4">出發前，請務必點開系統上半部的團體資料，確認以下四大重點：</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 mb-2">
+                            <i data-lucide="plane-takeoff"></i>
+                        </div>
+                        <span class="font-bold text-slate-700">航班資訊</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="bg-indigo-100 p-3 rounded-full text-indigo-600 mb-2">
+                            <i data-lucide="hotel"></i>
+                        </div>
+                        <span class="font-bold text-slate-700">飯店名稱</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="bg-amber-100 p-3 rounded-full text-amber-600 mb-2">
+                            <i data-lucide="bed-double"></i>
+                        </div>
+                        <span class="font-bold text-slate-700">分房表</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="bg-rose-100 p-3 rounded-full text-rose-600 mb-2">
+                            <i data-lucide="message-square-warning"></i>
+                        </div>
+                        <span class="font-bold text-slate-700">旅客備註</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區塊三：黃金接團法則 (重點強調) -->
+            <section class="bg-red-50 rounded-2xl border border-red-200 p-6 md:p-8 pulse-border shadow-sm">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="bg-red-600 text-white p-4 rounded-full flex-shrink-0 shadow-md">
+                        <i data-lucide="mouse-pointer-click" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-red-800 mb-2">3. 黃金接團法則 (系統右上角)</h2>
+                        <ul class="space-y-2 text-red-900 font-medium text-lg">
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="alarm-clock" class="text-red-500 w-5 h-5"></i> 
+                                養成習慣：每日 <span class="bg-white px-2 py-0.5 rounded text-red-700 font-bold border border-red-200">早</span>、<span class="bg-white px-2 py-0.5 rounded text-red-700 font-bold border border-red-200">中</span>、<span class="bg-white px-2 py-0.5 rounded text-red-700 font-bold border border-red-200">晚</span> 定時登入系統巡視。
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="zap" class="text-red-500 w-5 h-5 mt-1"></i> 
+                                <span>只要在系統右上角看到<strong class="text-red-700 mx-1 underline decoration-2 underline-offset-4">被派團</strong>的狀態，請務必<strong class="text-red-700 ml-1 text-xl">立刻點擊接收</strong>，確保自己的帶團權益！</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區塊四：結案與回報 -->
+            <section>
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-slate-100 pb-2">
+                    <i data-lucide="file-check-2" class="text-blue-500"></i> 4. 結團與回報作業
+                </h2>
+                <div class="bg-white border-2 border-dashed border-slate-300 rounded-xl p-5 flex items-start gap-4 hover:border-blue-400 transition-colors">
+                    <div class="bg-blue-100 p-3 rounded-lg text-blue-600 mt-1">
+                        <i data-lucide="pen-tool"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-1">領隊回團報告書</h3>
+                        <p class="text-slate-600">行程圓滿結束後，請回到 BTS 系統完成最後一哩路。所有的<span class="font-semibold text-blue-700">「領隊回團報告書」</span>及相關的後續意見回饋，皆是在此系統上進行線上填寫與提交結案。</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // 初始化 Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
